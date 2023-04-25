@@ -1,73 +1,95 @@
-import React, {useState, useContext} from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import {Context} from '../context/contextApi'
-import { ThreeCircles } from 'react-loader-spinner';
-import { CgClose } from 'react-icons/cg'
-import { SlMenu } from 'react-icons/sl'
-import { IoIosSearch } from 'react-icons/io'
-import Youtube from '../assets/youtube.logo.png' 
+import { Context } from '../context/contextApi'
+import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
+import { TiMicrophone } from "react-icons/ti";
+import { BsYoutube, BsCameraVideo, BsBell } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoAppsSharp } from "react-icons/io5";
+import { FallingLines } from 'react-loader-spinner'
 
 const Header = () => {
-const [searchQuery, setSearchQuery] = useState("");
-const {loading, mobileMenu, setMobileMenu} = useContext(Context);
-const navigate = useNavigate();
-const searchQueryHandler= (e) => {
-    if((e.key === "Enter" || e === "searchButton" && searchQuery.length > 0)) {
-        navigate(`/searchResult/${searchQuery}`)
-    }
-};
+    const [searchQuery, setSearchQuery] = useState("");
+    const { loading, mobileMenu, setMobileMenu } = useContext(Context);
+    const navigate = useNavigate();
 
+    const searchQueryHandler = (event) => {
+        if (
+            (event?.key === "Enter" || event === "searchButton" && searchQuery.length > 0)) {
+            navigate(`/searchResult/${searchQuery}`)
+        }
+    };
 
-const mobileMenuToggle= () => {
-    setMobileMenu(!mobileMenu);
-};
+    console.log(searchQuery)
 
-const { pathname } = useLocation();
-const pageName = pathname?.split("/")?.filter(Boolean)?.[0]
+    const mobileMenuToggle = () => {
+        setMobileMenu(!mobileMenu);
+    };
 
-  return (
-    <div className='sticky top-0 z-10 flex flex-row 
-    items-center justify-between h-14 px-4 md:px-5 bg-white dark:bg-black'>
-        {loading && <ThreeCircles />}
+    const { pathname } = useLocation();
+    const pageName = pathname?.split("/")?.filter(Boolean)?.[0]
 
-        <div>
-            {pageName !== "video" && (
-                <div
-                className='flex md:hidden md:mr-6 cursor-pointer items-center justify-center h-10 w-10 rounded-full hover:bg-[#303030]/[0.6]'
-                onClick={mobileMenuToggle}
-                >
-                    {mobileMenu ? (
-                    <CgClose className='text-white' />
-                ) : (
-                    <SlMenu className='text-white'/>
-                )    
-                }
-                </div>
-            )}
-            <Link to="/" className="flex h-5 items-center">
-                <img className='h-5 w-8' src={Youtube} alt="Youtube" />
-                <span className='text-white mx-2 font-bold'>Youtube</span>
-            </Link>
-        </div>
-        <div className='group flex items-center'>
-            <div className='flex h-8 md:h-10 md:ml-10 md:pl-5 border border-[#303030] rounded-l-3xl group-focus-within:border-blue-500 md:group-focus within:ml-5 md:group-focus-within:pl-0'>
-                <div className="w-10 items-center justify-center hidden group-focus-within:md:flex">
-                    <IoIosSearch className="text-white text-xl" />
-                </div>
-                <input 
-                type="text"
-                className='bg-transparent outline-none text-white pr-5 pl-5 md:pl-0 w-44 md:group-focus-within:pl-0 md:w-64 lg:w-[500px]'
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyUp={searchQueryHandler}
-                value={searchQuery}
+    return (
+        <>
+            {loading &&
+            <span className='flex justify-center'>
+                <FallingLines
+                    color="#4fa94d"
+                    width="50"
+                    visible={true}
+                    ariaLabel='falling-lines-loading'
                 />
+                </span>
+                }
+            <div className="flex justify-between items-center px-5 pt-3 h-14 bg-[#09090b] opacity-95 sticky top-0 z-50">
+                <div className="flex gap-8 items-center text-2xl">
+                    <div>
+                        <GiHamburgerMenu className='text-white' />
+                    </div>
+                    <Link to="/">
+                        <div className="flex gap-1 items-center justify-center">
+                            <BsYoutube className='text-red-600 text-3xl' />
+                            <span className="text-xl font-medium ">YouTube</span>
+                        </div>
+                    </Link>
+                </div>
+                <div className="flex items-center justify-center gap-5">
+                    <form action="">
+                        <div className="flex bg-zinc-900-items-center h-10 md:pl-5 border-solid border-2 border-zinc-800 rounded-full">
+                            <div className="flex gap-2 items-center pr-5">
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onKeyUp={searchQueryHandler}
+                                    className='mx-2 w-50 lg:w-96 bg-[#09090b] border-none focus:outline-none'
+                                />
+                                <AiOutlineClose className='hidden md:flex text-xl cursor-pointer ' />
+                            </div>
+                            <button className='h-9 w-16 flex items-center justify-center bg-zinc-800 rounded-r-full'>
+                                <AiOutlineSearch className='text-xl' onClick={() => searchQueryHandler("searchButton")} />
+                            </button>
+                        </div>
+                    </form>
+                    <div className='hidden md:flex text-xl p-3 bg-zinc-900 rounded-full'>
+                        <TiMicrophone />
+                    </div>
+                </div>
+                <div className='flex md:gap-5 text-xl items-center'>
+                    <BsCameraVideo className="hidden md:flex" />
+                    <IoAppsSharp className="hidden md:flex" />
+                    <div className='relative'>
+                        <BsBell className="hidden md:flex" />
+                        <span className='hidden md:flex absolute bottom-3 left-2 bg-red-800 rounded-full text-xs px-1'>9+</span>
+                    </div>
+                    <img
+                        className="w-8 h-8 m-2 rounded-full"
+                        src="https://wallpapers.com/images/hd/animated-girl-freckles-pq088qlgdz4nud2n.jpg"
+                        alt="logo" />
+                </div>
             </div>
-                <button className='w-[400px] md:w-[60px] h-8 md:h-10 flex items-center justify-center border border-l-0 border-[#303030] rounded-r-3xl bg-white/[0.1]'>
-                <IoIosSearch className="text-white text-xl" />
-                </button>
-        </div>
-        </div>
-  )
+        </>
+    )
 }
 
 export default Header

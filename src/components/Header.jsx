@@ -31,16 +31,6 @@ const Header = () => {
 
     return (
         <>
-            {loading &&
-            <span className='flex justify-center'>
-                <FallingLines
-                    color="#4fa94d"
-                    width="50"
-                    visible={true}
-                    ariaLabel='falling-lines-loading'
-                />
-                </span>
-                }
             <div className="flex justify-between items-center px-5 pt-3 h-14 bg-[#09090b] opacity-95 sticky top-0 z-50">
                 <div className="flex gap-8 items-center text-2xl">
                     <div>

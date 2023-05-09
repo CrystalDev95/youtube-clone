@@ -4,7 +4,6 @@ import { Context } from '../context/contextApi'
 import { fetchDataApi } from '../utils/api';
 import Sidebar from './Sidebar';
 import SearchResultVideoCard from './SearchResultVideoCard'
-import Loader from '../assets/loader.svg'
 
 const SearchResult = () => {
   const [result, setResult] = useState();
@@ -29,7 +28,7 @@ const SearchResult = () => {
     <div className='flex'>
       <Sidebar />
       <div className='grow w-[calc(100%-500px)] h-full overflow-y-auto'>
-      {loading && <img className='mx-auto my-10' src={Loader} alt="loader" /> }
+      {loading && <p>Loading</p> }
 
       {!loading && result?.map((item) => {
                         if (item?.type !== "video") return false;

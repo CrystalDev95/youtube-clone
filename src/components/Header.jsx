@@ -6,7 +6,6 @@ import { TiMicrophone } from "react-icons/ti";
 import { BsYoutube, BsCameraVideo, BsBell } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoAppsSharp } from "react-icons/io5";
-import { FallingLines } from 'react-loader-spinner'
 
 const Header = () => {
     const [searchQuery, setSearchQuery] = useState("");

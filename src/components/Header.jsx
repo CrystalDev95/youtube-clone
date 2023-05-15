@@ -9,21 +9,16 @@ import { IoAppsSharp } from "react-icons/io5";
 
 const Header = () => {
     const [searchQuery, setSearchQuery] = useState("");
-    const { loading, mobileMenu, setMobileMenu } = useContext(Context);
     const navigate = useNavigate();
 
-    const searchQueryHandler = (event) => {
-        if (
-            (event?.key === "Enter" || event === "searchButton" && searchQuery.length > 0)) {
+    const searchQueryHandler = (e) => {
+        if ((e.key === "Enter" || e === "searchButton") && searchQuery.length > 0) {
             navigate(`/searchResult/${searchQuery}`)
         }
     };
 
     console.log(searchQuery)
 
-    const mobileMenuToggle = () => {
-        setMobileMenu(!mobileMenu);
-    };
 
     const { pathname } = useLocation();
     const pageName = pathname?.split("/")?.filter(Boolean)?.[0]
@@ -48,15 +43,16 @@ const Header = () => {
                             <div className="flex gap-2 items-center pr-5">
                                 <input
                                     type="text"
-                                    value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     onKeyUp={searchQueryHandler}
                                     className='mx-2 w-50 lg:w-96 bg-[#09090b] border-none focus:outline-none'
                                 />
                                 <AiOutlineClose className='hidden md:flex text-xl cursor-pointer ' />
                             </div>
-                            <button className='h-9 w-16 flex items-center justify-center bg-zinc-800 rounded-r-full'>
-                                <AiOutlineSearch className='text-xl' onClick={() => searchQueryHandler("searchButton")} />
+                            <button 
+                            className='h-9 w-16 flex items-center justify-center bg-zinc-800 rounded-r-full' 
+                            onClick={() => searchQueryHandler("searchButton")}>
+                                <AiOutlineSearch className='text-xl' />
                             </button>
                         </div>
                     </form>
